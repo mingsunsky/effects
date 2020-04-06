@@ -12,7 +12,7 @@ class PerformanceTest extends org.scalatest.FreeSpec {
 
   def monixUpload(doc: String): Task[String] = Task(s"${doc} uploaded")
 
-  def catsIOUpload(doc: String): IO[Unit] = IO (s"${doc} uploaded")
+  def catsIOUpload(doc: String): IO[String] = IO (s"${doc} uploaded")
 
   "Future performance" in {
     import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,7 +36,7 @@ class PerformanceTest extends org.scalatest.FreeSpec {
     import scala.concurrent.ExecutionContext.Implicits.global
 
     val ios = Seq.fill(count)(catsIOUpload("cats IO"))
-    val result: Seq[Future[Unit]] = ios.map(_.unsafeToFuture())
+    val result: Seq[Future[String]] = ios.map(_.unsafeToFuture())
 
     Await.result(Future.sequence(result), Inf)
   }
