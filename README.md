@@ -6,6 +6,18 @@
 A Future is a placeholder object for a value that may not yet exist.
 
 
+```
+import scala.util.{Success, Failure}
+
+val future = Future {12}
+
+future onComplete {
+  case Success(s) => ???
+  case Failure(e) => ???
+}
+```
+
+
 ## Good
 * Non-blocking, concurrent 
 * Is a Monad and can be mapped and flatMapped
